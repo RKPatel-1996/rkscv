@@ -1,0 +1,329 @@
+/* Controls at the top */
+.controls-container {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: rgba(31, 41, 55, 0.5);
+  padding: 8px 15px;
+  border-radius: 50px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* --- New Transition for hiding --- */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  opacity: 1;
+}
+
+/* New class to hide the controls */
+.controls-container.hidden {
+  opacity: 0;
+  transform: translate(-50%, -200%); /* Move up and out of view */
+  pointer-events: none;
+}
+
+/* The "box" where the balls bounce */
+.chaos-box {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* --- New Style for the Prompt Text --- */
+.prompt-text {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.5rem;
+  color: #f3f4f6;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.chaos-button {
+  background-color: #f9a8d4;
+  color: #1f2937;
+  font-weight: bold;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 0 10px #f9a8d4, 0 0 20px #f9a8d4;
+  animation: pulse 2s infinite;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.chaos-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #f9a8d4, 0 0 30px #f9a8d4;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Speed Control Arrows Styling */
+.speed-control {
+  background: none;
+  border: none;
+  color: #f9a8d4;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  user-select: none;
+}
+
+.speed-control:hover {
+  transform: scale(1.2);
+  color: #fff;
+}
+.speed-control:active {
+  transform: scale(1.1);
+}
+.arrow-line {
+  position: absolute;
+  background-color: currentColor;
+}
+.up-arrow .arrow-line {
+  width: 2px;
+  height: 15px;
+  transform: translateY(-2px);
+}
+.up-arrow .arrow-line::before,
+.up-arrow .arrow-line::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 8px;
+  background-color: currentColor;
+  transform-origin: bottom center;
+}
+.up-arrow .arrow-line::before {
+  transform: rotate(-45deg);
+  left: -5px;
+  top: 6px;
+}
+.up-arrow .arrow-line::after {
+  transform: rotate(45deg);
+  right: -5px;
+  top: 6px;
+}
+.down-arrow .arrow-line {
+  width: 2px;
+  height: 15px;
+  transform: translateY(2px);
+}
+.down-arrow .arrow-line::before,
+.down-arrow .arrow-line::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 8px;
+  background-color: currentColor;
+  transform-origin: top center;
+}
+.down-arrow .arrow-line::before {
+  transform: rotate(45deg);
+  left: -5px;
+  top: 1px;
+}
+.down-arrow .arrow-line::after {
+  transform: rotate(-45deg);
+  right: -5px;
+  top: 1px;
+}
+
+/* The "box" where the balls bounce */
+.chaos-box {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Styling for the bouncing balls */
+.ball {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border: 2px solid #ec4899;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  will-change: transform;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease,
+    transform 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 0 5px rgba(236, 72, 153, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
+  background-image: var(--ball-logo);
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+}
+
+.ball-text {
+  color: #1f2937;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 5px;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ball:hover {
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 15px rgba(236, 72, 153, 0.8);
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+.ball:hover .ball-text {
+  opacity: 1;
+}
+
+.ball.paused {
+  animation: none !important;
+  cursor: grab;
+}
+
+/* Ripple Effect Styling */
+.ripple {
+  position: absolute;
+  border: 2px solid #a855f7;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple-grow 600ms ease-out forwards;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ... (all previous CSS rules remain the same) ... */
+
+/* --- New Spark Effect Styling --- */
+.spark-container {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 200;
+  width: 30px;
+  height: 30px;
+}
+
+.spark {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: #fef08a; /* Bright yellow */
+  border-radius: 50%;
+  opacity: 0;
+  animation: spark-fly 500ms ease-out forwards;
+}
+
+/* Position and delay each spark particle */
+.spark:nth-child(1) {
+  transform: rotate(0deg) translateY(-15px);
+  animation-delay: 0s;
+}
+.spark:nth-child(2) {
+  transform: rotate(60deg) translateY(-15px);
+  animation-delay: 50ms;
+}
+.spark:nth-child(3) {
+  transform: rotate(120deg) translateY(-15px);
+  animation-delay: 100ms;
+}
+.spark:nth-child(4) {
+  transform: rotate(180deg) translateY(-15px);
+  animation-delay: 150ms;
+}
+.spark:nth-child(5) {
+  transform: rotate(240deg) translateY(-15px);
+  animation-delay: 200ms;
+}
+.spark:nth-child(6) {
+  transform: rotate(300deg) translateY(-15px);
+  animation-delay: 250ms;
+}
+
+/* --- New: Responsive styles for the prompt text and layout on narrow screens --- */
+@media (max-width: 768px) {
+  .prompt-text {
+    top: 50%; /* Center vertically */
+    left: 5%; /* Position from the left edge */
+    transform: translateY(-50%); /* Adjust for vertical centering */
+    text-align: left; /* Align text to the left */
+    width: 40%; /* Give it a width to force text to wrap/stack */
+    font-size: 2.2rem;
+    line-height: 1.2; /* Improve spacing for stacked text */
+  }
+}
+
+@keyframes spark-fly {
+  0% {
+    opacity: 1;
+    transform-origin: center;
+    transform: scale(1.5) rotate(0deg) translateY(-15px);
+  }
+  100% {
+    opacity: 0;
+    transform-origin: center;
+    transform: scale(0) rotate(360deg) translateY(-40px);
+  }
+}
+
+@keyframes ripple-grow {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+    border-color: #a855f7;
+    border-width: 4px;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.5);
+    opacity: 0;
+    border-color: rgba(168, 85, 247, 0);
+    border-width: 0px;
+  }
+}

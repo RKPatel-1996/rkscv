@@ -1,0 +1,119 @@
+/* Main container for the side-by-side layout */
+.page-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  animation: pageFadeIn 0.7s ease-out;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Sidebar for the navigation balls */
+.page-sidebar {
+  width: 180px; /* Width of the sidebar */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
+}
+
+.sidebar-balls-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between the balls */
+}
+
+/* Base style for all balls in the sidebar */
+.page-ball {
+  width: 80px;
+  height: 80px;
+  border: 2px solid #ec4899;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  background-image: var(--ball-logo);
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth transition */
+}
+
+/* Style for the currently selected, active ball */
+.page-ball.active {
+  width: 100px; /* Bigger size */
+  height: 100px;
+  opacity: 1;
+  border-color: #f9a8d4;
+  box-shadow: 0 0 15px #f9a8d4;
+}
+
+/* Style for the other, inactive balls */
+.page-ball.inactive {
+  opacity: 0.4; /* Semi-transparent */
+  transform: scale(0.8); /* Slightly smaller */
+}
+
+/* Inactive balls become prominent on hover */
+.page-ball.inactive:hover {
+  opacity: 1;
+  transform: scale(0.95);
+  border-color: #fff;
+}
+
+/* Text that appears on hover for all balls */
+.page-ball-text {
+  position: absolute;
+  left: 110%; /* Position text to the right of the ball */
+  width: max-content; /* Ensure text doesn't wrap */
+  padding: 8px 12px;
+  background-color: #1f2937;
+  color: #f3f4f6;
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateX(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.page-ball:hover .page-ball-text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Main content area */
+.page-content {
+  flex-grow: 1; /* Takes up the remaining space */
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-placeholder {
+  text-align: center;
+  color: #d1d5db;
+}
+
+.content-placeholder h1 {
+  font-size: 3rem;
+  color: #f9a8d4;
+  margin-bottom: 1rem;
+}
+
+.content-placeholder p {
+  font-size: 1.2rem;
+}
