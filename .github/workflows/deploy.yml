@@ -1,0 +1,61 @@
+# Name of your workflow
+name: Deploy React App to GitHub Pages
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push events but only for the "main" branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build-and-deploy"
+  build-and-deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Grant permissions for the job to make changes
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # 1. Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Sets up Node.js on the server
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # Use a recent LTS version of Node.js
+          cache: "npm"
+
+      # 3. Installs all your project's dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Runs the build script to create the static site in the /dist folder
+      - name: Build project
+        run: npm run build
+
+      # 5. Prepares the built 'dist' folder for deployment
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # 6. Uploads the built site as an artifact for deployment
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload the entire 'dist' directory
+          path: "./dist"
+
+      # 7. Deploys the artifact to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
